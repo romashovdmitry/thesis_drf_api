@@ -8,8 +8,9 @@ Download project
 
 There is a file example.env. You can create your .env file or just change name to .env and pass your comfortable values.
 
-<code>docker compose up
-docker ps</code>
+<code>docker compose up</code>
+
+<code>docker ps</code>
 
 Copy container id and put instead of CID
 
