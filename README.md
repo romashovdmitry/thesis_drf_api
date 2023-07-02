@@ -2,7 +2,10 @@
 
 Download project
 
-<code>git clone https://github.com/romashovdmitry/thesis_drf_api</code>
+<code>
+git clone https://github.com/romashovdmitry/thesis_drf_api
+cd thesis_drf_api
+</code>
 
 There is a file example.env. You can create your .env file or just change name to .env and pass your comfortable values.
 
