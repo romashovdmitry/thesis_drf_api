@@ -1,5 +1,5 @@
 # Django imports
-from django.db.models import Model, CharField
+from django.db.models import Model, CharField, Count
 
 
 class Department(Model):

@@ -34,7 +34,7 @@ class DepartmentSerializer(ModelSerializer):
 
     def get_employees_counter(self, obj):
 
-        return Employee.objects.filter(department=obj).count()
+        return obj.employees_counter
 
     def get_budget(self, obj):
 

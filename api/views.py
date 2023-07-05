@@ -4,6 +4,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import action
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
 
 # import models
 from company.models.department import Department
@@ -13,8 +14,7 @@ from company.models.employee import Employee
 from api.serializers import DepartmentSerializer, EmployeeSeializer
 
 # Django imports
-from django.http import HttpResponse
-from django.contrib.auth.models import User
+from django.db.models import Count
 
 # import custom objects
 from api.paginators import EmployessPagination
@@ -22,11 +22,13 @@ from api.paginators import EmployessPagination
 # JWT imports
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
+# import custom filter
+from api.filters import FullNameFilter
 
 class DepartmentsViewSet(ModelViewSet):
     ''' To work with departments '''
     permission_classes = [AllowAny]
-    queryset = Department.objects.all()
+    queryset = Department.objects.annotate(employees_counter=Count('employees_of_department'))
     serializer_class = DepartmentSerializer
     http_method_names = ['post', 'get']
 
@@ -35,7 +37,10 @@ class EmployeesViewSet(ModelViewSet):
     ''' To work with employees '''
     queryset = Employee.objects.all()
     serializer_class = EmployeeSeializer
-    filter_backends = [DjangoFilterBackend]
+    # SearchFilter is not suitable because of spaces,
+    # that can't be processed correctly
+    filter_backends = [DjangoFilterBackend, FullNameFilter, SearchFilter]
+    search_fields = ['full_name']
     filterset_fields = ['department', 'position']
     pagination_class = EmployessPagination
     authentication_classes = [JWTAuthentication]

@@ -26,7 +26,7 @@ class Employee(Model):
     age = PositiveSmallIntegerField(null=True)
     department = ForeignKey(
         Department,
-        related_name='department_of_employee',
+        related_name='employees_of_department',
         on_delete=CASCADE
     )
 
